@@ -4,6 +4,10 @@ A beginner-friendly business automation project combining Google Sheets and Pyth
 
 ## 1. Spreadsheet Automation
 
+### Live Google Sheets Project
+
+[Open Student Fee Management Spreadsheet](https://docs.google.com/spreadsheets/d/16B4tbsKoQkpIB7IhPg0-YLZu3ToP2Fh9rp2NiPO1PMc/edit?gid=43362266#gid=43362266)
+
 **Tool:** Google Sheets
 
 ### Features
