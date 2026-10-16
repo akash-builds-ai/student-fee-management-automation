@@ -1,0 +1,16 @@
+STUDENT FEE MANAGEMENT REPORT
+-----------------------------
+Total Students: 8
+Pending Students: 6
+Clear Students: 2
+Total Known Fee Due: Rs. 17500
+Records to Review: 1
+
+RECORDS TO REVIEW
+Mohit - Missing Fee Due
+
+DUPLICATE NAMES
+Aarav - 2 records
+
+INVALID STATUS RECORDS
+No invalid statuses found.
