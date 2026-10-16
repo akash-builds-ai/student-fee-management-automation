@@ -28,15 +28,49 @@ def validate_status(value):
 
 students = []
 
+
+required_columns = [
+    "student_id",
+    "name",
+    "fee_due",
+    "fee_paid",
+    "status"
+]
+
+students = []
+
 with open("students.csv", "r", newline="", encoding="utf-8") as file:
     reader = csv.DictReader(file)
+
+    if reader.fieldnames is None:
+        raise ValueError("CSV file is empty or missing its header.")
+
+    missing_columns = [
+        column for column in required_columns
+        if column not in reader.fieldnames
+    ]
+
+    if missing_columns:
+        raise ValueError(
+            f"CSV is missing required columns: {', '.join(missing_columns)}"
+        )
 
     for row in reader:
         students.append(row)
 
+
 total_students = len(students)
-pending_students = sum(1 for s in students if s["status"] == "Pending")
-clear_students = sum(1 for s in students if s["status"] == "Clear")
+
+pending_students = sum(
+    1 for s in students
+    if s["status"].strip().title() == "Pending"
+)
+
+clear_students = sum(
+    1 for s in students
+    if s["status"].strip().title() == "Clear"
+)
+
 
 known_fee_due = 0
 records_to_review = []
@@ -46,6 +80,11 @@ for student in students:
     fee, status = parse_fee(student["fee_due"])
 
     
+    if student["name"].strip() == "":
+        records_to_review.append({
+            "name": "[Blank Name]",
+            "issue": "Missing Student Name"
+        })
     status_result = validate_status(student["status"])
 
     if status_result != "OK":
