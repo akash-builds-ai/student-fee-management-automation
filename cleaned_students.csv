@@ -1,0 +1,8 @@
+student_id,name,fee_due,fee_paid,status
+1001,Aarav,500,15000,Pending
+1002,Rahul,0,20000,Clear
+1003,Karan,3000,12000,Pending
+1005,Yash,7000,13000,Pending
+1006,Aarav,5000,15000,Pending
+1007,Simran,0,25000,Clear
+1008,Neha,2000,10000,Pending

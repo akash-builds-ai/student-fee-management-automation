@@ -39,24 +39,31 @@ required_columns = [
 
 students = []
 
-with open("students.csv", "r", newline="", encoding="utf-8") as file:
-    reader = csv.DictReader(file)
+try:
+    with open("students.csv", "r", newline="", encoding="utf-8") as file:
+        reader = csv.DictReader(file)
 
-    if reader.fieldnames is None:
-        raise ValueError("CSV file is empty or missing its header.")
+        if not reader.fieldnames or not any(
+        column and column.strip() for column in reader.fieldnames
+):
+            raise ValueError("CSV file is empty or missing its header.")
 
-    missing_columns = [
-        column for column in required_columns
-        if column not in reader.fieldnames
-    ]
+        missing_columns = [
+            column for column in required_columns
+            if column not in reader.fieldnames
+        ]
 
-    if missing_columns:
-        raise ValueError(
-            f"CSV is missing required columns: {', '.join(missing_columns)}"
-        )
+        if missing_columns:
+            raise ValueError(
+                f"CSV is missing required columns: {', '.join(missing_columns)}"
+            )
 
-    for row in reader:
-        students.append(row)
+        for row in reader:
+            students.append(row)
+
+except FileNotFoundError:
+    print("Error: students.csv file not found.")
+    raise SystemExit(1)
 
 
 total_students = len(students)
@@ -75,6 +82,7 @@ clear_students = sum(
 known_fee_due = 0
 records_to_review = []
 invalid_status_records = []
+cleaned_students = []
 
 for student in students:
     fee, status = parse_fee(student["fee_due"])
@@ -102,6 +110,15 @@ for student in students:
             "issue": status
         })
 
+    if (
+        student["name"].strip() != ""
+        and status == "OK"
+        and status_result == "OK"
+    ):
+        cleaned_students.append(student)
+
+    
+
 print("STUDENT FEE MANAGEMENT AUTOMATION")
 print("---------------------------------")
 print("Total Students:", total_students)
@@ -109,6 +126,15 @@ print("Pending Students:", pending_students)
 print("Clear Students:", clear_students)
 print("Total Known Fee Due: ₹", known_fee_due)
 print("Records to Review:", len(records_to_review))
+
+summary_records = [
+    {"metric": "Total Students", "value": total_students},
+    {"metric": "Pending Students", "value": pending_students},
+    {"metric": "Clear Students", "value": clear_students},
+    {"metric": "Total Known Fee Due", "value": known_fee_due},
+    {"metric": "Records to Review", "value": len(records_to_review)}
+]
+
 
 print("\nRECORDS TO REVIEW")
 for record in records_to_review:
@@ -176,3 +202,43 @@ print("\nDUPLICATE NAMES")
 for name, count in name_counts.items():
     if count > 1:
         print(name.title(), "-", count, "records")
+
+
+# Export review records to CSV
+with open("records_to_review.csv", "w", newline="", encoding="utf-8") as file:
+    fieldnames = ["name", "issue"]
+    writer = csv.DictWriter(file, fieldnames=fieldnames)
+
+    writer.writeheader()
+    writer.writerows(records_to_review)
+
+print("Review records saved: records_to_review.csv")
+
+
+# Export cleaned students to CSV
+with open("cleaned_students.csv", "w", newline="", encoding="utf-8") as file:
+    fieldnames = ["student_id", "name", "fee_due", "fee_paid", "status"]
+    writer = csv.DictWriter(file, fieldnames=fieldnames)
+
+    writer.writeheader()
+    writer.writerows(cleaned_students)
+
+print("Cleaned student saved: cleaned_students.csv")
+
+
+# Export summary to CSV
+with open("fee_summary.csv", "w", newline="", encoding="utf-8") as file:
+    fieldnames = ["metric", "value"]
+    writer = csv.DictWriter(file, fieldnames=fieldnames)
+
+    writer.writeheader()
+    writer.writerows(summary_records)
+
+print("Fee summary saved: fee_summary.csv")
+
+
+
+
+
+
+
