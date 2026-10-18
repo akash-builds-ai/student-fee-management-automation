@@ -5,9 +5,7 @@ A beginner-friendly business automation project combining Google Sheets and Pyth
 ## 1. Spreadsheet Automation
 
 ### Live Google Sheets Project
-
 [Open Student Fee Management Spreadsheet](https://docs.google.com/spreadsheets/d/16B4tbsKoQkpIB7IhPg0-YLZu3ToP2Fh9rp2NiPO1PMc/edit?gid=43362266#gid=43362266)
-
 **Tool:** Google Sheets
 
 ### Features
@@ -29,36 +27,66 @@ A beginner-friendly business automation project combining Google Sheets and Pyth
 - Detects missing, invalid, and negative fee values.
 - Validates student status values (`Pending` and `Clear`).
 - Identifies duplicate names without deleting records.
+- Flags blank student names for review.
+- Handles missing input files and validates CSV headers.
 - Generates `fee_report.txt` automatically.
+- Exports records requiring review to `records_to_review.csv`.
+- Exports validated student records to `cleaned_students.csv`.
+- Exports summary metrics to `fee_summary.csv`.
 
 ## Project Files
 
-- `student_fee_automation.py` — Main Python script.
-- `students.csv` — Fictional sample student records.
+- `student_fee_automation.py` — Main Python automation script.
+- `students.csv` — Fictional sample student records used as input.
 - `fee_report.txt` — Generated summary and validation report.
-- `Screenshots/` — Project screenshots.
+- `cleaned_students.csv` — Export of validated student records.
+- `records_to_review.csv` — Records requiring manual review.
+- `fee_summary.csv` — Summary metrics exported to CSV.
+- `Screenshots/` — Project screenshots for demonstration.
 
 ## How to Run the Python Script
 
-1. Install Python 3.
-2. Open a terminal in this project folder.
-3. Run:
+**Prerequisites:** Python 3 installed on your system.
 
-   ```bash
-   python student_fee_automation.py
-   ```
+1. Clone or download this repository.
+2. Open a terminal in the project folder.
+3. Ensure `students.csv` is present in the same folder as the Python script.
+4. Run the following command:
 
-The script reads `students.csv` and generates `fee_report.txt`.
+```bash
+python student_fee_automation.py
+```
+
+The script processes the input CSV and generates these output files:
+
+- `fee_report.txt`
+- `cleaned_students.csv`
+- `records_to_review.csv`
+- `fee_summary.csv`
+
+The script also checks input data for missing or invalid values and reports issues that require attention.
 
 ## Sample Results
 
-- Total students: 8
-- Pending students: 6
-- Clear students: 2
-- Total known Fee Due: ₹17,500
-- Records to review: 1
+The script was tested using 8 fictional student records.
 
-One sample record has a missing Fee Due value. The script flags it for review instead of assuming the missing amount is zero. The sample data also contains two different student records with the name Aarav; both are retained.
+| Metric | Result |
+|---|---:|
+| Total Students | 8 |
+| Pending Students | 6 |
+| Clear Students | 2 |
+| Total Known Fee Due | ₹17,500 |
+| Records to Review | 1 |
+
+### Data Validation Examples
+
+- **Missing fee:** Mohit's record is flagged for review because Fee Due is missing.
+- **Duplicate names:** Two records named Aarav are retained because they have different student IDs.
+- **Cleaned data:** Validated student records are exported to `cleaned_students.csv`.
+- **Review records:** Records requiring attention are exported to `records_to_review.csv`.
+- **Summary export:** Key metrics are saved in `fee_summary.csv`.
+
+Missing fee values are not automatically treated as zero. This helps prevent incorrect financial summaries.
 
 ## Learning Outcomes
 
