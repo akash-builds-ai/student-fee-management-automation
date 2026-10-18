@@ -60,11 +60,14 @@ try:
 
         for row in reader:
             students.append(row)
-
+            
 except FileNotFoundError:
     print("Error: students.csv file not found.")
     raise SystemExit(1)
 
+except ValueError as error:
+    print(f"Error: {error}")
+    raise SystemExit(1)
 
 total_students = len(students)
 
