@@ -101,3 +101,9 @@ This project demonstrates practical spreadsheet skills, Python programming, CSV 
 ## Data Disclaimer
 
 All included student records are fictional and intended for educational and portfolio demonstration purposes.
+
+### Python Automation Output
+
+![Python Automation Output](Screenshots/04_Python_Automation_Output.png)
+
+*Python script summary showing student counts, fee validation results, duplicate-name detection, and generated report files.*
