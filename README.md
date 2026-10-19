@@ -1,6 +1,9 @@
 # Student Fee Management Project
+A practical business automation project that combines Google Sheets and Python to organize student fee records, validate data quality, identify records requiring review, and generate automated CSV reports.
 
-A beginner-friendly business automation project combining Google Sheets and Python to organize student fee records, validate data, and generate reports.
+**Tools:** Google Sheets · Python · CSV · Git & GitHub
+
+**Key Features:** Fee summaries · Data validation · Duplicate-name detection · Cleaned data export · Automated reporting
 
 ## 1. Spreadsheet Automation
 
